@@ -1,4 +1,10 @@
+import 'package:final_project/screens/auth/SignIn_screen.dart';
+import 'package:final_project/screens/auth/forgetpass_screen.dart';
 import 'package:final_project/screens/auth/registration_screen.dart';
+import 'package:final_project/screens/auth/signUp_screen.dart';
+import 'package:final_project/screens/auth/terms_screen.dart';
+import 'package:final_project/screens/auth/verification_screen.dart';
+import 'package:final_project/screens/home_screen.dart';
 import 'package:final_project/screens/lunch_screen.dart';
 import 'package:final_project/screens/page_view.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +27,12 @@ class MyApp extends StatelessWidget {
         '/lunch_screen' : (context) =>const LunchScreen(),
         '/page_view' : (context) => const PageViews(),
         '/registration_screen' : (context) => const RegistrationScreen(),
+        '/signUp_screen' : (context) => const SignUpScreen(),
+        '/signIn_screen' : (context) => const SignInScreen(),
+        '/verification_screen' : (context) => const VerificationScreen(),
+        '/terms_screen' : (context) => const TermsScreen(),
+        '/forgetpass_screen' : (context) => const ForgetPassScreen(),
+        '/home_screen' : (context) => const HomeScreen(),
       },
     );
   }

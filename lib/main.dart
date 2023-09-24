@@ -4,9 +4,12 @@ import 'package:final_project/screens/auth/registration_screen.dart';
 import 'package:final_project/screens/auth/signUp_screen.dart';
 import 'package:final_project/screens/auth/terms_screen.dart';
 import 'package:final_project/screens/auth/verification_screen.dart';
+import 'package:final_project/screens/dataRecording_screen.dart';
+import 'package:final_project/screens/details_screen.dart';
 import 'package:final_project/screens/home_screen.dart';
 import 'package:final_project/screens/lunch_screen.dart';
 import 'package:final_project/screens/page_view.dart';
+import 'package:final_project/screens/successful_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,6 +36,9 @@ class MyApp extends StatelessWidget {
         '/terms_screen' : (context) => const TermsScreen(),
         '/forgetpass_screen' : (context) => const ForgetPassScreen(),
         '/home_screen' : (context) => const HomeScreen(),
+        '/details_screen' : (context) => const DetailsScreen(),
+        '/dataRecording_screen' : (context) => const DataRecordingScreen(),
+        '/successful_screen' : (context) => const SuccessfulScreen(),
       },
     );
   }

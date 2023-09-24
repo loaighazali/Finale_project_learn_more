@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         '/verification_screen' : (context) => const VerificationScreen(),
         '/terms_screen' : (context) => const TermsScreen(),
         '/forgetpass_screen' : (context) => const ForgetPassScreen(),
-        '/home_screen' : (context) => const HomeScreen(),
+        '/home_screen' : (context) =>  HomeScreen(),
         '/details_screen' : (context) => const DetailsScreen(),
         '/dataRecording_screen' : (context) => const DataRecordingScreen(),
         '/successful_screen' : (context) => const SuccessfulScreen(),

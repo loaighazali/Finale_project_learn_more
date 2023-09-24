@@ -199,6 +199,7 @@ class _HomeNavScreenState extends State<HomeNavScreen> {
 
              SizedBox(height: 200,
                child: ListView.builder(
+                 padding: EdgeInsetsDirectional.zero,
                  shrinkWrap: true,
                  itemCount: _listCours.length,
                  itemBuilder: (context, index) {

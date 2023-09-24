@@ -7,18 +7,18 @@ import 'bottomNav/message_screen.dart';
 import 'bottomNav/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
+   HomeScreen({Key? key ,  this.index = 0}) : super(key: key);
+     int? index = 0 ;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  int _currentIndex = 0 ;
+  late int? _currentIndex = widget.index ;
 
 
-  List<Widget> _listScreen = [
+   List<Widget> _listScreen = [
     HomeNavScreen(),
     MessageScreen(),
     CalenderScreen(),
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       body: Stack(
         children: [
-          _listScreen[_currentIndex],
+          _listScreen[_currentIndex!],
           Positioned(
             bottom: 20,
             right: 20,
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white,
                 selectedItemColor: Colors.yellowAccent,
-                currentIndex: _currentIndex,
+                currentIndex: _currentIndex!,
                 showSelectedLabels: false,
 
 
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
 
-                items: [
+                items:const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home_outlined),
                     label: '',

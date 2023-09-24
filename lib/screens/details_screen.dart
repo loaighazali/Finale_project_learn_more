@@ -1,3 +1,5 @@
+import 'package:final_project/screens/bottomNav/homeNav_screen.dart';
+import 'package:final_project/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -131,7 +133,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   children: [
                     const Text('To contact the course instructor ?'),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(index: 1),)),
                       child:const Text(
                         'Press here',
                         style: TextStyle(

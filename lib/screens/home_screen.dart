@@ -18,11 +18,11 @@ class _HomeScreenState extends State<HomeScreen> {
   late int? _currentIndex = widget.index ;
 
 
-   List<Widget> _listScreen = [
-    HomeNavScreen(),
-    MessageScreen(),
-    CalenderScreen(),
-    ProfileScreen()
+   final List<Widget> _listScreen = [
+   const HomeNavScreen(),
+   const MessageScreen(),
+   const CalenderScreen(),
+   const ProfileScreen()
   ];
 
   @override
@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedItemColor: Colors.yellowAccent,
                 currentIndex: _currentIndex!,
                 showSelectedLabels: false,
+                selectedLabelStyle:const TextStyle(fontSize: 1),
 
 
 

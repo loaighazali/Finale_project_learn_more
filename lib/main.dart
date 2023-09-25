@@ -4,6 +4,7 @@ import 'package:final_project/screens/auth/registration_screen.dart';
 import 'package:final_project/screens/auth/signUp_screen.dart';
 import 'package:final_project/screens/auth/terms_screen.dart';
 import 'package:final_project/screens/auth/verification_screen.dart';
+import 'package:final_project/screens/communication_screen.dart';
 import 'package:final_project/screens/dataRecording_screen.dart';
 import 'package:final_project/screens/details_screen.dart';
 import 'package:final_project/screens/home_screen.dart';

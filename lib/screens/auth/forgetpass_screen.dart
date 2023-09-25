@@ -147,7 +147,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
             height: 10,
           ),
           ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/home_screen'),
+            onPressed: () => Navigator.pushNamed(context, '/signIn_screen'),
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsetsDirectional.zero,
                 backgroundColor: const Color(0xFF852530),
@@ -182,7 +182,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
 
 
 
-           Container(
+          const SizedBox(
              height: 42,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,

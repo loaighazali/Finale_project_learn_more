@@ -78,7 +78,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return SizedBox(
                 height: 70,
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if(index == 5 ) {
+                      Navigator.pushReplacementNamed(context, '/signIn_screen');
+                    }
+
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(

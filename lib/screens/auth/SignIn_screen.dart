@@ -18,7 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {},
           icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF852530),
@@ -112,7 +112,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 45,
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/home_screen'),
+              onPressed: () => Navigator.pushReplacementNamed(context, '/home_screen'),
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsetsDirectional.zero,
                   backgroundColor: const Color(0xFF852530),

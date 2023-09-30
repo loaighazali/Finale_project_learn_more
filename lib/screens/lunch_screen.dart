@@ -14,7 +14,7 @@ class _LunchScreenState extends State<LunchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 15), () {
       Navigator.pushReplacementNamed(context, '/page_view');
     },);
   }

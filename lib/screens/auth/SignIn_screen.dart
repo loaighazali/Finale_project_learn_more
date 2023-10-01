@@ -1,3 +1,5 @@
+import 'package:final_project/controllers/fb_auth_controller.dart';
+import 'package:final_project/helpers/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,15 +12,37 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> with Helpers {
   bool visiblePass = true;
+
+  late TextEditingController _emailEditingController ;
+  late TextEditingController _passwordEditingController ;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailEditingController = TextEditingController();
+    _passwordEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailEditingController.dispose();
+    _passwordEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/registration_screen');
+          },
           icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF852530),
@@ -46,42 +70,55 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(
               height: 80,
             ),
-            Row(
-              children: [
-                Container(
-                  width: 70,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '+972',
-                      style: TextStyle(fontSize: 14, color: Colors.black),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: 248,
-                    height: 44,
-                    child: AppTextField(
-                      hint: 'Phone',
-                      inputType: TextInputType.phone,
-                      suffix:
-                          IconButton(onPressed: () {}, icon: const Icon(null)),
-                    ),
-                  ),
-                )
-              ],
+            // Row(
+            //   children: [
+            //     Container(
+            //       width: 70,
+            //       height: 45,
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadiusDirectional.circular(5),
+            //         border: Border.all(
+            //           color: Colors.grey,
+            //           width: 1,
+            //         ),
+            //       ),
+            //       child: const Center(
+            //         child: Text(
+            //           '+972',
+            //           style: TextStyle(fontSize: 14, color: Colors.black),
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(
+            //       width: 10,
+            //     ),
+            //     Expanded(
+            //       child: SizedBox(
+            //         width: 248,
+            //         height: 44,
+            //         child: AppTextField(
+            //           hint: 'Phone',
+            //           inputType: TextInputType.phone,
+            //           suffix:
+            //               IconButton(onPressed: () {}, icon: const Icon(null)),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+
+            SizedBox(
+              width: 364,
+              height: 44,
+              child:  AppTextField(
+                controller: _emailEditingController,
+                hint: 'Email',
+                inputType: TextInputType.emailAddress,
+                suffix:
+                IconButton(onPressed: () {}, icon: const Icon(null)),
+              ),
             ),
+
             const SizedBox(
               height: 15,
             ),
@@ -89,6 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
               width: 364,
               height: 44,
               child: AppTextField(
+                controller: _passwordEditingController,
                 hint: 'Password',
                 inputType: TextInputType.visiblePassword,
                 obscure: visiblePass,
@@ -112,7 +150,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 45,
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/home_screen'),
+              onPressed: () async =>  await performSignIn(),
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsetsDirectional.zero,
                   backgroundColor: const Color(0xFF852530),
@@ -150,4 +188,30 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
+  Future<void> performSignIn()async{
+
+    if(checkData()){
+      await login();
+    }
+  }
+
+  bool checkData(){
+    if(_emailEditingController.text.isNotEmpty && _passwordEditingController.text.isNotEmpty){
+
+      return true;
+    }
+    showSnackBar(context: context, message: 'Enter Email And Password !' , error:  true);
+    return false;
+
+  }
+
+  Future<void> login()async{
+    bool status = await FbAuthController().SignIn(context: context, email: _emailEditingController.text, passWord: _passwordEditingController.text);
+    if(status){
+      showSnackBar(context: context, message: 'SignIn is Successfully');
+      Navigator.pushNamed(context, '/home_screen');
+    }
+  }
+
 }

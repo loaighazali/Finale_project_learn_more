@@ -1,3 +1,5 @@
+import 'package:final_project/controllers/fb_auth_controller.dart';
+import 'package:final_project/helpers/helpers.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +12,32 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> with Helpers {
   bool visiblePass = true;
   bool visibleConfPass = true;
+
+ late TextEditingController _emailEditingController ;
+ late TextEditingController _passwordEditingController ;
+ late TextEditingController _confiermPasswordEditingController ;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailEditingController = TextEditingController();
+    _passwordEditingController = TextEditingController();
+    _confiermPasswordEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailEditingController.dispose();
+    _passwordEditingController.dispose();
+    _confiermPasswordEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,42 +75,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const SizedBox(
               height: 15,
             ),
-            Row(
-              children: [
-                Container(
-                  width: 70,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '+972',
-                      style: TextStyle(fontSize: 14, color: Colors.black),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: 248,
-                    height: 44,
-                    child: AppTextField(
-                      hint: 'Phone',
-                      inputType: TextInputType.phone,
-                      suffix:
-                          IconButton(onPressed: () {}, icon: const Icon(null)),
-                    ),
-                  ),
-                )
-              ],
+            const SizedBox(
+              width: 10,
             ),
+            SizedBox(
+              width: 364,
+              height: 44,
+              child:  AppTextField(
+                controller: _emailEditingController,
+                hint: 'Email',
+                inputType: TextInputType.emailAddress,
+                suffix:
+                IconButton(onPressed: () {}, icon: const Icon(null)),
+              ),
+            ),
+
             const SizedBox(
               height: 15,
             ),
@@ -93,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 364,
               height: 44,
               child: AppTextField(
+                controller:_passwordEditingController,
                 hint: 'Password',
                 inputType: TextInputType.visiblePassword,
                 obscure: visiblePass,
@@ -115,6 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 364,
               height: 44,
               child: AppTextField(
+                controller: _confiermPasswordEditingController,
                 hint: 'Confirm Password ',
                 inputType: TextInputType.visiblePassword,
                 obscure: visibleConfPass,
@@ -159,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/signIn_screen'),
+              onPressed: () async => await performSignIN() ,
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsetsDirectional.zero,
                   backgroundColor: const Color(0xFF852530),
@@ -188,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 const Text('Already have account?'),
                 TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/signIn_screen'),
+                  onPressed: () =>  Navigator.pushNamed(context, '/signIn_screen'),
                   child:const Text(
                     'SignIn',
                     style: TextStyle(
@@ -247,5 +253,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> performSignIN()async{
+
+    if(checkData()){
+      await register();
+    }
+  }
+
+  bool checkData(){
+    if(_emailEditingController.text.isNotEmpty && _passwordEditingController.text.isNotEmpty && _confiermPasswordEditingController.text.isNotEmpty){
+      if(_passwordEditingController.text == _confiermPasswordEditingController.text){
+        return true ;
+      }
+      else{
+        showSnackBar(context: context, message: ' Password isNot Confierm !' , error: true);
+      }
+    }
+    showSnackBar(context: context, message: 'Check Email And Password !' , error:  true);
+    return false;
+
+  }
+
+  Future<void> register()async{
+    bool status = await FbAuthController().register(context: context, email: _emailEditingController.text, passWord: _confiermPasswordEditingController.text);
+    if(status){
+      Navigator.pushNamed(context, '/signIn_screen');
+    }
   }
 }

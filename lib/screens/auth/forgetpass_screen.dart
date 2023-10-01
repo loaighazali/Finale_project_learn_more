@@ -1,3 +1,5 @@
+import 'package:final_project/controllers/fb_auth_controller.dart';
+import 'package:final_project/helpers/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +12,32 @@ class ForgetPassScreen extends StatefulWidget {
   State<ForgetPassScreen> createState() => _ForgetPassScreenState();
 }
 
-class _ForgetPassScreenState extends State<ForgetPassScreen> {
+class _ForgetPassScreenState extends State<ForgetPassScreen> with Helpers{
   bool visiblePass = true;
   bool visibleConfPass = true;
+
+  late TextEditingController _emailEditingController ;
+  late TextEditingController _passwordEditingController ;
+  late TextEditingController _confiermPasswordEditingController ;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailEditingController = TextEditingController();
+    _passwordEditingController = TextEditingController();
+    _confiermPasswordEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailEditingController.dispose();
+    _passwordEditingController.dispose();
+    _confiermPasswordEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,41 +74,53 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
           const SizedBox(
             height: 45,
           ),
-          Row(
-            children: [
-              Container(
-                width: 70,
-                height: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadiusDirectional.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    '+972',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: 248,
-                  height: 44,
-                  child: AppTextField(
-                    hint: 'Phone',
-                    inputType: TextInputType.phone,
-                    suffix:
-                        IconButton(onPressed: () {}, icon: const Icon(null)),
-                  ),
-                ),
-              )
-            ],
+          // Row(
+          //   children: [
+          //     Container(
+          //       width: 70,
+          //       height: 45,
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadiusDirectional.circular(5),
+          //         border: Border.all(
+          //           color: Colors.grey,
+          //           width: 1,
+          //         ),
+          //       ),
+          //       child: const Center(
+          //         child: Text(
+          //           '+972',
+          //           style: TextStyle(fontSize: 14, color: Colors.black),
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       width: 10,
+          //     ),
+          //     Expanded(
+          //       child: SizedBox(
+          //         width: 248,
+          //         height: 44,
+          //         child: AppTextField(
+          //           hint: 'Phone',
+          //           inputType: TextInputType.phone,
+          //           suffix:
+          //               IconButton(onPressed: () {}, icon: const Icon(null)),
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+
+          SizedBox(
+            width: 364,
+            height: 44,
+            child:AppTextField(
+              controller: _emailEditingController,
+              hint: 'Email',
+              inputType: TextInputType.emailAddress,
+              suffix:
+              IconButton(onPressed: () {}, icon: const Icon(null)),
+            ),
           ),
           const SizedBox(
             height: 15,
@@ -92,6 +129,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
             width: 364,
             height: 44,
             child: AppTextField(
+              controller: _passwordEditingController,
               hint: 'Password',
               inputType: TextInputType.visiblePassword,
               obscure: visiblePass,
@@ -114,6 +152,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
             width: 364,
             height: 44,
             child: AppTextField(
+              controller: _confiermPasswordEditingController,
               hint: 'Confirm Password ',
               inputType: TextInputType.visiblePassword,
               obscure: visibleConfPass,
@@ -147,7 +186,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
             height: 10,
           ),
           ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/signIn_screen'),
+            onPressed: () async => await forgetPassword(),
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsetsDirectional.zero,
                 backgroundColor: const Color(0xFF852530),
@@ -159,7 +198,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                       width: 1,
                     ))),
             child: const Text(
-              'SignIn',
+              'Send',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.white,
@@ -198,5 +237,12 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> forgetPassword()async{
+   bool stutas = await FbAuthController().forgetPassword(context: context, email: _emailEditingController.text);
+   if(stutas){
+     Navigator.pushNamed(context, '/signIn_screen');
+   }
   }
 }

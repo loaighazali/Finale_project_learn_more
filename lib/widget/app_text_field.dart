@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
+    required this.controller,
     required this.hint,
      this.inputType = TextInputType.text,
     this.obscure = false ,
@@ -14,10 +15,12 @@ class AppTextField extends StatelessWidget {
   final TextInputType inputType  ;
   final bool obscure ;
   final IconButton suffix  ;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller:controller ,
       keyboardType: inputType,
       textAlignVertical: TextAlignVertical.bottom,
       obscureText: obscure,

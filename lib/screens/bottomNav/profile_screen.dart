@@ -1,3 +1,5 @@
+import 'package:final_project/controllers/fb_auth_controller.dart';
+import 'package:final_project/helpers/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +12,9 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with Helpers{
 
-  List<ProfileList> _list =[
+  final List<ProfileList> _list =[
     ProfileList(iconData: Icons.settings,lable: 'Settings'),
     ProfileList(iconData: Icons.favorite,lable: 'Favorites'),
     ProfileList(iconData: Icons.star,lable: 'Rate us'),
@@ -78,8 +80,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return SizedBox(
                 height: 70,
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async{
                     if(index == 5 ) {
+                      await FbAuthController().signOut();
+                      showSnackBar(context: context, message: 'Log Out is Succsuffly');
                       Navigator.pushReplacementNamed(context, '/signIn_screen');
                     }
 

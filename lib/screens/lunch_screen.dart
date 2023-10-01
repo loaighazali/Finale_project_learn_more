@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:final_project/controllers/fb_auth_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +13,26 @@ class LunchScreen extends StatefulWidget {
 
 class _LunchScreenState extends State<LunchScreen> {
 
+  late StreamSubscription _streamSubscription ;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 15), () {
-      Navigator.pushReplacementNamed(context, '/page_view');
+    Future.delayed(const Duration(seconds: 3), () {
+      FbAuthController().checkUserState(listener: ({required bool status}) {
+        String rout = status ? '/home_screen' : '/page_view' ;
+        Navigator.pushReplacementNamed(context, rout);
+      }, );
+
     },);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _streamSubscription.cancel();
+    super.dispose();
   }
 
   @override
